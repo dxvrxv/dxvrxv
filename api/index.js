@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
 
     try {
         const response = await fetch(`https://discord.com/api${url}`, {
-            headers: { 'Authorization': `Bot YOUR_BOT_TOKEN_HERE` } // Replace YOUR_BOT_TOKEN_HERE with your actual bot token
+            headers: { 'Authorization': `Bot ODgzOTg3MzMzMjgyNjY0NDk5.Gi3qG6.Q9eZYb-e67J64qRXHyegBNauzU10zUh76DNHRg` } // Replace YOUR_BOT_TOKEN_HERE with your actual bot token
         });
 
         const data = await response.json();
