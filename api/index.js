@@ -54,10 +54,10 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
     // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-        res.status(204).end(); // No content response
-        return;
-    }
+    // if (req.method === 'OPTIONS') {
+    //     res.status(204).end(); // No content response
+    //     return;
+    // }
 
     // Discord Bot token
     const botToken = 'ODgzOTg3MzMzMjgyNjY0NDk5.Gi3qG6.Q9eZYb-e67J64qRXHyegBNauzU10zUh76DNHRg'; // Replace with your actual bot token
