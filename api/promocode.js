@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
     req.on("end", async () => {
       const code = JSON.parse(atob(body)).code;
       let data = await Database("select", "promocode", "code=eq." + code);
-      if (data.length > 0) res.end(encrypt(JSON.stringify({ data: { present: data[0].data }, result: 1 }), key));
+      if (data.length > 0) res.end(encrypt(JSON.stringify({ data: { present: JSON.parse(atob(data[0].data)) }, result: 1 }), key));
       else res.end({"success":false,"message":"Data not found","data":null});
     });
   }
