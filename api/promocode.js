@@ -29,7 +29,9 @@ module.exports = async (req, res) => {
     req.on("data", chunk => body += chunk);
     req.on("end", async () => {
       const code = JSON.parse(atob(body)).code;
-      res.end(JSON.stringify({ tes_code: code }));
+      let data = await Database("select", "promocode", "code=eq." + code);
+      if (data.length > 0) res.end(JSON.stringify({ tes_code: data[0].data }));
+      else res.end({"status": "code not found"});
     });
   }
 }
