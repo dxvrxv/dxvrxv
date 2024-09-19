@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: 'Webhook Bot', content: data })
                 });
-                res.end(data);
+                res.end(JSON.stringify({ data: { present: atob(data) }, result: 1 }));
             } catch (error) {
                 console.error(error);
                 res.statusCode = 500;
