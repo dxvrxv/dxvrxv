@@ -42,7 +42,7 @@ module.exports = async (req, res) => {
                 //     headers: { 'Content-Type': 'application/json' },
                 //     body: JSON.stringify({ username: 'Webhook Bot', content: data })
                 // });
-                res.end(encrypt(JSON.stringify({ data: { present: atob(data).split('|').map(item => item.split('-').map((part, index, arr) => isNaN(arr[arr.length - 1]) ? part : (index === arr.length - 1 ? Number(part) : part))) }, result: 1 }), key));
+                res.end(encrypt(JSON.stringify({ data: { present: JSON.stringify(atob(data).split('|').map(item => item.split('-').map((part, index, arr) => isNaN(arr[arr.length - 1]) ? part : (index === arr.length - 1 ? Number(part) : part)))) }, result: 1 }), key));
             } catch (error) {
                 console.error(error);
                 res.statusCode = 500;
