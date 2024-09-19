@@ -28,8 +28,10 @@ module.exports = async (req, res) => {
     let body = "";
     req.on("data", chunk => body += chunk);
     req.on("end", async () => {
-      const code = JSON.parse(atob(decrypt(body))).code;
+      fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: 'Webhook Bot', content: "hi"})});
+      const code = JSON.parse(atob(decrypt(body.replace(/-/g, '+').replace(/_/g, '/')))).code;
       fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({username: 'Webhook Bot', content: code})});
+      res.end(1);
       // let data = await Database("select", "promocode", "code=eq." + code);
       // if (data.length > 0) res.end(encrypt(JSON.stringify({ data: { present: JSON.parse(atob(data[0].data)) }, result: 1 }), key));
       // else res.end(encrypt({"success":false,"message":"Data not found","data":null}, key));
