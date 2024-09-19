@@ -41,28 +41,14 @@ module.exports = async (req, res) => {
         req.on("data", chunk => body += chunk);
         req.on("end", async () => {
             try {
-                // Send first webhook
-                const data = decodeURIComponent(decodeURIComponent(body)).replace(/-/g, '+').replace(/_/g, '/').replace(/^data=/, '');
+                const code = JSON.parse(decrypt(decodeURIComponent(decodeURIComponent(body)).replace(/-/g, '+').replace(/_/g, '/').replace(/^data=/, ''), key)).code;
+                const data = await Database("select", "promocode", `code=eq.${code}`)[0].data;
                 await fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username: 'Webhook Bot', content: data })
                 });
-                const code = JSON.parse(decrypt(data, key)).code;
-
-                // Send second webhook
-                await fetch('https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: 'Webhook Bot', content: code })
-                });
-
-                // Handle Database logic
-                // let data = await Database("select", "promocode", "code=eq." + code);
-                // if (data.length > 0) res.end(encrypt(JSON.stringify({ data: { present: JSON.parse(atob(data[0].data)) }, result: 1 }), key));
-                // else res.end(encrypt({"success":false,"message":"Data not found","data":null}, key));
-                
-                res.end('Success');
+                res.end(data);
             } catch (error) {
                 console.error(error);
                 res.statusCode = 500;
