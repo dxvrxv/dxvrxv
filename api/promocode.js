@@ -17,6 +17,7 @@ const log = (data) => fetch("https://discord.com/api/webhooks/110038148679809442
 const key = "6g83zKNShmZcYE747WaLuKdzyMNspM4Y";
 
 module.exports = async (req, res) => {
+    db = database
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
             try {
                 if (body.split("=")[0] == "data") {
                     const body = JSON.parse(dec(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
-                    const data = (await database("select", "promocode", "code=eq." + body.code))[0].data;
+                    const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
                     log(`body: ${body} |data: ${data}`);
                     res.status(200).end(data);
                 } else if (body.split("=")[0] == "setdata") {
