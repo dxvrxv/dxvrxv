@@ -24,9 +24,11 @@ module.exports = (req, res) => {
             try {
                 const body = Buffer.concat(chunks).toString();
                 if (body.split("=")[0] == "data") {
-                    res.status(200).end(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
+                    const data = dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key);
+                    res.status(200).end(data);
                 } else if (body.split("=")[0] == "setdata") {
-                    res.status(200).end(body);
+                    const data = atob(decodeURIComponent(body).replace(/^setdata=/, ""));
+                    res.status(200).end(data);
                 } else res.status(200).end("else");
             } catch (error) {
                 res.status(500).end("Internal Server Error");
