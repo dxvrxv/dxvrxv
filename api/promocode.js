@@ -34,7 +34,11 @@ module.exports = async (req, res) => {
                     } else res.status(200).end("code doesn't exists or has expired");
                 } else if (body.split("=")[0] == "setdata") {
                     const data = JSON.parse(atob(decodeURIComponent(body).replace(/^setdata=/, "")));
-                    res.status(200).json(data);
+                    if ((await db("select", "promocode", "code=eq." + data.code))[0]) res.status(200).end("code already exists");
+                    else {
+                        db("insert", "promocode", "", data);
+                        res.status(200).end("code has created");
+                    }
                 }
             } catch (error) {
                 res.status(500).json({ error: error.message });
