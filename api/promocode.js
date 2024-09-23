@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
         let body = "";
         req.on("data", c => body += c);
         req.on("end", async () => {
-            res.status(200).end(JSON.stringify(body));
+            res.status(200).end(JSON.parse(body));
         });
     } else {
         res.status(405).end("Method Not Allowed");
