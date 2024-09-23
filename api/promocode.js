@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
                     res.status(200).end(enc(data, key));
                 } else if (body.split("=")[0] == "setdata") {
                     const data = JSON.parse(atob(decodeURIComponent(body).replace(/^setdata=/, "")));
-                    res.status(200).end(data);
+                    res.status(200).json(data);
                 }
             } catch (error) {
                 res.status(500).json({ error: error.message });
