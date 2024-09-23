@@ -25,14 +25,13 @@ module.exports = (req, res) => {
         req.on("data", chunk => chunks.push(chunk));
         req.on("end", () => {
             try {
-                const body = Buffer.concat(chunks).toString();
                 if (body.split("=")[0] == "data") {
-                    const body = JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
+                    const body = JSON.parse(dec(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
                     const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
                     log(`body: ${body} |data: ${data}`);
                     res.status(200).end(data);
                 } else if (body.split("=")[0] == "setdata") {
-                    const body = atob(decodeURIComponent(body).replace(/^setdata=/, ""));
+                    const body = atob(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/^setdata=/, ""));
                     res.status(200).end(body);
                 } else res.status(200).end("else");
             } catch (error) {
