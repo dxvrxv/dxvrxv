@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         req.on("data", c => body += c);
         req.on("end", async () => {
             try {
-                res.status(200).end(body);
+                res.status(200).end(decodeURIComponent(body));
             } catch (error) {
                 res.status(500).end("Internal Server Error")
             };
