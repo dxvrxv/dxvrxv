@@ -26,7 +26,8 @@ module.exports = async (req, res) => {
         req.on("end", async () => {
             try {
                 if (body.split("=")[0] == "data") {
-                    res.status(200).end((await db("select", "promocode", "code=eq." + JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"), key)).code))[0].data);
+                    const code = JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key)).code;
+                    res.status(200).end((await db("select", "promocode", "code=eq." + code))[0].data);
                 } else if (body.split("=")[0] == "setdata") {
                     res.status(200).end(decodeURIComponent(body));
                 }
