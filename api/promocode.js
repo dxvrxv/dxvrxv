@@ -25,7 +25,8 @@ module.exports = async (req, res) => {
         req.on("data", c => body += c);
         req.on("end", async () => {
             try {
-                res.status(200).end(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"));
+                body.split("=")[0] == "data" && res.status(200).end(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"));
+                body.split("=")[0] == "setdata" && res.status(200).end(decodeURIComponent(body));
             } catch (error) {
                 res.status(500).json({ error: error.message });
             }
