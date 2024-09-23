@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     if (req.method == "POST") {
         const chunks = [];
-        req.on("data", chunk => chunks.push(chunk.toString()));
+        req.on("data", chunk => log(chunk));
         req.on("end", async () => {
             try {
                 const body = Buffer.concat(chunks).toString();
