@@ -30,7 +30,8 @@ module.exports = async (req, res) => {
                     const data = JSON.stringify({ data: { present: JSON.stringify(atob((await db("select", "promocode", "code=eq." + code))[0].data).split("|").map(d => d.split("-").map(v => isNaN(v) ? v : Number(v)))) }, result: 1 });
                     res.status(200).end(enc(data, key));
                 } else if (body.split("=")[0] == "setdata") {
-                    res.status(200).end(decodeURIComponent(body));
+                    const data = JSON.parse(atob(decodeURIComponent(body).replace(/^setdata=/, "")));
+                    res.status(200).end(data);
                 }
             } catch (error) {
                 res.status(500).json({ error: error.message });
