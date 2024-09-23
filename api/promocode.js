@@ -20,8 +20,8 @@ module.exports = (req, res) => {
         req.on("data", chunk => chunks.push(chunk));
         req.on("end", () => {
             try {
-                const data = decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, "");
-                res.status(200).end(data);
+                const promocode = JSON.parse(decrypt(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
+                res.json(promocode);
             } catch (error) {
                 res.status(500).end("Internal Server Error");
             }
