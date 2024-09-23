@@ -35,7 +35,8 @@ module.exports = async (req, res) => {
                     res.status(200).end(setdata);
                 } else res.status(200).end("else");
             } catch (error) {
-                res.status(500).end("Internal Server Error");
+                // res.status(500).end("Internal Server Error");
+                res.status(500).json({ error: error.message });
             }
         })
     } else {
