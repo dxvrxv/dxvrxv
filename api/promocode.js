@@ -15,31 +15,20 @@ async function db(action, table, filter = "", data = {}) {
         default: throw new Error("Invalid action");
     }
 }
+
 module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     if (req.method == "POST") {
-        const chunks = [];
-        req.on("data", chunk => log(chunk));
+        let body = "";
+        req.on("data", c => body += c);
         req.on("end", async () => {
             try {
-                const body = Buffer.concat(chunks).toString();
-                if (body.split("=")[0] == "data") {
-                    const data = JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
-                    // const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
-                    // log(`body: ${body} |data: ${data}`);
-                    res.status(200).end(data);
-                } else if (body.split("=")[0] == "setdata") {
-                    const setdata = atob(decodeURIComponent(body).replace(/^setdata=/, ""));
-                    res.status(200).end(setdata);
-                } else res.status(200).end("else");
+                res.status(200).end(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"));
             } catch (error) {
-                // res.status(500).end("Internal Server Error");
                 res.status(500).json({ error: error.message });
             }
         })
-    } else {
-        res.status(405).end("Method Not Allowed");
     }
 }
