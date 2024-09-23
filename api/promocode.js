@@ -30,7 +30,7 @@ module.exports = async (req, res) => {
                     const data = (await db("select", "promocode", "code=eq." + code))[0];
                     if (data && data.remain > 0) {
                         db("update", "promocode", "code=eq." + code, { remain: data.remain - 1 });
-                        res.status(200).end(enc(JSON.stringify({ data: { present: JSON.stringify(data.content.split("|")).map(d => d.split("-").map(v => isNaN(v) ? v : Number(v))) }, result: 1 })));
+                        res.status(200).end(enc(JSON.stringify({ data: { present: JSON.stringify(atob(data.content.split("|"))).map(d => d.split("-").map(v => isNaN(v) ? v : Number(v))) }, result: 1 })));
                     } else res.status(200).end("code doesn't exists or has expired");
                 } else if (body.split("=")[0] == "setdata") {
                     const data = JSON.parse(atob(decodeURIComponent(body).replace(/^setdata=/, "")));
