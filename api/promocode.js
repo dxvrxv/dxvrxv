@@ -24,10 +24,10 @@ module.exports = (req, res) => {
                 const body = Buffer.concat(chunks).toString().replace(/-/g, "+").replace(/_/g, "/");
                 if (body.split("=")[0] == "data") {
                     // data = dec(decodeURIComponent(body).replace(/^data=/, ""), key);
-                    res.status(200).end("if");
+                    res.status(200).end(body);
                 } else if (body.split("=")[0] == "setdata") {
                     // data = atob(decodeURIComponent(body));
-                    res.status(200).end("else if");
+                    res.status(200).end(body);
                 } else res.status(200).end("else");
             } catch (error) {
                 res.status(500).end("Internal Server Error");
