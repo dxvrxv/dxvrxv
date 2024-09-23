@@ -21,9 +21,9 @@ module.exports = (req, res) => {
         req.on("data", chunk => chunks.push(chunk));
         req.on("end", () => {
             try {
-                const body = Buffer.concat(chunks).toString().replace(/-/g, "+").replace(/_/g, "/");
+                const body = Buffer.concat(chunks).toString();
                 if (body.split("=")[0] == "data") {
-                    res.status(200).end(dec(decodeURIComponent(body).replace(/^data=/, ""), key));
+                    res.status(200).end(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
                 } else if (body.split("=")[0] == "setdata") {
                     // data = atob(decodeURIComponent(body));
                     res.status(200).end(body);
