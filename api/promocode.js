@@ -17,6 +17,9 @@ async function db(action, table, filter = "", data = {}) {
 }
 log("online");
 module.exports = (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     if (req.method == "POST") {
         const chunks = [];
         req.on("data", chunk => chunks.push(chunk));
@@ -24,11 +27,13 @@ module.exports = (req, res) => {
             try {
                 const body = Buffer.concat(chunks).toString();
                 if (body.split("=")[0] == "data") {
-                    const data = dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key);
+                    const body = JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
+                    const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
+                    log(`body: ${body} |data: ${data}`);
                     res.status(200).end(data);
                 } else if (body.split("=")[0] == "setdata") {
-                    const data = atob(decodeURIComponent(body).replace(/^setdata=/, ""));
-                    res.status(200).end(data);
+                    const body = atob(decodeURIComponent(body).replace(/^setdata=/, ""));
+                    res.status(200).end(body);
                 } else res.status(200).end("else");
             } catch (error) {
                 res.status(500).end("Internal Server Error");
