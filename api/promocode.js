@@ -22,7 +22,7 @@ module.exports = (req, res) => {
         req.on("end", () => {
             try {
                 const body = decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, "")
-                res.status(200).end(code);
+                res.status(200).end(body);
             } catch (error) {
                 res.status(500).end("Internal Server Error");
             }
