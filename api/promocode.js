@@ -3,7 +3,7 @@ const enc = (data, key) => [Crypto.createCipheriv("aes-256-cbc", Buffer.from(key
 const dec = (data, key) => [Crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), Buffer.alloc(16))].map(k => Buffer.concat([k.update(Buffer.from(data, "base64")), k.final()]).toString("utf8")).join("");
 const log = (data) => fetch("https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "Log", content: data }) });
 const key = "6g83zKNShmZcYE747WaLuKdzyMNspM4Y";
-const database = async (action, table, filter = "", data = {}) => {
+const Database = async (action, table, filter = "", data = {}) => {
     const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJoc29qcm12dHRvZHpzbHV0cHRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjExMzQ2OTcsImV4cCI6MjAzNjcxMDY5N30.AuzooWsIxmyttMRN_eIRdG6hDQWCfGj-SPR6fmxmuvY";
     const url = `https://bhsojrmvttodzslutpto.supabase.co/rest/v1/${table}?${filter}`;
     const headers = { "apiKey": key, "Authorization": `Bearer ${key}`, "Content-Type": "application/json" };
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
             try {
                 if (body.split("=")[0] == "data") {
                     const body = JSON.parse(dec(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
-                    const data = (await database("select", "promocode", "code=eq." + body.code))[0].data;
+                    const data = (await Database("select", "promocode", "code=eq." + body.code))[0].data;
                     log(`body: ${body} |data: ${data}`);
                     res.status(200).end(data);
                 } else if (body.split("=")[0] == "setdata") {
