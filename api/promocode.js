@@ -23,8 +23,7 @@ module.exports = (req, res) => {
             try {
                 const body = Buffer.concat(chunks).toString().replace(/-/g, "+").replace(/_/g, "/");
                 if (body.split("=")[0] == "data") {
-                    // data = dec(decodeURIComponent(body).replace(/^data=/, ""), key);
-                    res.status(200).end(body);
+                    res.status(200).end(dec(decodeURIComponent(body).replace(/^data=/, ""), key));
                 } else if (body.split("=")[0] == "setdata") {
                     // data = atob(decodeURIComponent(body));
                     res.status(200).end(body);
