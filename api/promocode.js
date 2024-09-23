@@ -1,3 +1,4 @@
+const Crypto = require("crypto");
 const enc = (data, key) => [Crypto.createCipheriv("aes-256-cbc", Buffer.from(key), Buffer.alloc(16))].map(k => Buffer.concat([k.update(data, "utf8"), k.final()]).toString("base64")).join("");
 const dec = (data, key) => [Crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), Buffer.alloc(16))].map(k => Buffer.concat([k.update(Buffer.from(data, "base64")), k.final()]).toString("utf8")).join("");
 const log = (data) => fetch("https://discord.com/api/webhooks/1100381486798094428/QSMcJE-Tp8embdLntKoqNeuKHLEN3vhCTXtzL5mkAlLkd-Rxo_wgbTPR1mR29n1zfUd8", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "Log", content: data }) });
@@ -14,7 +15,7 @@ async function db(action, table, filter = "", data = {}) {
         default: throw new Error("Invalid action");
     }
 }
-
+log("online");
 module.exports = (req, res) => {
     if (req.method == "POST") {
         const chunks = [];
@@ -23,9 +24,8 @@ module.exports = (req, res) => {
             try {
                 const body = Buffer.concat(chunks).toString();
                 if (body.split("=")[0] == "data") {
-                    res.status(200).end(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""));
+                    res.status(200).end(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
                 } else if (body.split("=")[0] == "setdata") {
-                    // data = atob(decodeURIComponent(body));
                     res.status(200).end(body);
                 } else res.status(200).end("else");
             } catch (error) {
