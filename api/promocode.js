@@ -21,7 +21,7 @@ module.exports = (req, res) => {
         req.on("data", chunk => chunks.push(chunk));
         req.on("end", () => {
             try {
-                const code = JSON.parse(decrypt(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key)).code;
+                const code = JSON.parse(dec(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key)).code;
                 res.status(200).end(code);
             } catch (error) {
                 res.status(500).end("Internal Server Error");
