@@ -15,5 +15,5 @@ async function db(action, table, filter = "", data = {}) {
 }
 
 module.exports = async (req, res) => {
-    res.end(JSON.stringify(req));
+    res.end("Hello");
 }
