@@ -26,9 +26,9 @@ module.exports = async (req, res) => {
             try {
                 if (body.split("=")[0] == "data") {
                     const body = JSON.parse(dec(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key));
-                    const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
-                    log(`body: ${body} |data: ${data}`);
-                    res.status(200).end(data);
+                    // const data = (await db("select", "promocode", "code=eq." + body.code))[0].data;
+                    // log(`body: ${body} |data: ${data}`);
+                    res.status(200).end(body);
                 } else if (body.split("=")[0] == "setdata") {
                     const body = atob(decodeURIComponent(Buffer.concat(chunks).toString()).replace(/^setdata=/, ""));
                     res.status(200).end(body);
