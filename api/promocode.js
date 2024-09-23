@@ -14,17 +14,18 @@ async function db(action, table, filter = "", data = {}) {
     }
 }
 
-module.exports = async (req, res) => {
+module.exports = (req, res) => {
     if (req.method == "POST") {
-        let body = "";
-        req.on("data", c => body += c);
-        req.on("end", async () => {
+        const chunks = [];
+        req.on("data", chunks.push);
+        req.on("end", () => {
             try {
-                res.status(200).end(decodeURIComponent(body));
+                const body = Buffer.concat(chunks).toString();
+                res.status(200).end(body);
             } catch (error) {
-                res.status(500).end("Internal Server Error")
-            };
-        });
+                res.status(500).end("Internal Server Error");
+            }
+        })
     } else {
         res.status(405).end("Method Not Allowed");
     }
