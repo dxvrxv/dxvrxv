@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
             try {
                 if (body.split("=")[0] == "data") {
                     const code = JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/").replace(/^data=/, ""), key)).code;
-                    const data = JSON.stringify({ data: { present: JSON.stringify(atob((await db("select", "promocode", "code=eq." + code))[0].data).split("|").map(d => d.split("-").map(v => isNaN(v) ? v : Number(v)))) }, result: 1 });
+                    const data = JSON.stringify({ data: { present: JSON.stringify(atob((await db("select", "promocode", "code=eq." + code))[0].content).split("|").map(d => d.split("-").map(v => isNaN(v) ? v : Number(v)))) }, result: 1 });
                     res.status(200).end(enc(data, key));
                 } else if (body.split("=")[0] == "setdata") {
                     const data = JSON.parse(atob(decodeURIComponent(body).replace(/^setdata=/, "")));
