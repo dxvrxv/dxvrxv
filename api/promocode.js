@@ -20,9 +20,10 @@ module.exports = async (req, res) => {
         req.on("data", c => body += c);
         req.on("end", async () => {
             try {
-                log(JSON.stringify(JSON.parse(body)));
-                res.status(200).end(JSON.stringify(JSON.parse(body)));
-            } catch (error) res.status(500).end("Internal Server Error");
+                res.status(200).end(body);
+            } catch (error) {
+                res.status(500).end("Internal Server Error")
+            };
         });
     } else {
         res.status(405).end("Method Not Allowed");
