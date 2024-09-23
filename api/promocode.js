@@ -25,8 +25,11 @@ module.exports = async (req, res) => {
         req.on("data", c => body += c);
         req.on("end", async () => {
             try {
-                body.split("=")[0] == "data" && res.status(200).end(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"));
-                body.split("=")[0] == "setdata" && res.status(200).end(decodeURIComponent(body));
+                if (body.split("=")[0] == "data") {
+                    res.status(200).end((await db("select", "promocode", "code=eq." + JSON.parse(dec(decodeURIComponent(body).replace(/-/g, "+").replace(/_/g, "/"), key)).code))[0].data);
+                } else if (body.split("=")[0] == "setdata") {
+                    res.status(200).end(decodeURIComponent(body));
+                }
             } catch (error) {
                 res.status(500).json({ error: error.message });
             }
