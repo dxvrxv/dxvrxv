@@ -17,7 +17,7 @@ async function db(action, table, filter = "", data = {}) {
 module.exports = (req, res) => {
     if (req.method == "POST") {
         const chunks = [];
-        req.on("data", chunks.push);
+        req.on("data", chunk => chunks.push(chunk));
         req.on("end", () => {
             try {
                 const body = Buffer.concat(chunks).toString();
