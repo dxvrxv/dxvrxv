@@ -20,7 +20,17 @@ module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    if (req.method == "POST") {
+    if (req.method == "GET") {
+        const { code } = req.query;
+        if (!url) return res.status(400).json({ error: 'URL parameter required' });
+        try {
+            const data = await db("select", "promocode", "code" + (code != "*" ? ("=eq." + code) : ""));
+            res.status(200).json(data);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+    else if (req.method == "POST") {
         let body = "";
         req.on("data", c => body += c);
         req.on("end", async () => {
