@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     if (req.method == "GET") {
         const { code } = req.query;
-        if (!url) return res.status(400).json({ error: 'URL parameter required' });
+        if (!code) return res.status(400).json({ error: 'code parameter required' });
         try {
             const data = await db("select", "promocode", "code" + (code != "*" ? ("=eq." + code) : ""));
             res.status(200).json(data);
