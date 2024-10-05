@@ -11,7 +11,7 @@ const players = {};
 module.exports = async (req, res) => {
     const { channel, text, userName, flag } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (players[userName]) {
-        if (content) {
+        if (text) {
             const msgObj = { msgId: randomID(), channel, text, userId: players.length, userName, flag: flag || 0 }
             messages.push(msgObj); Object.keys(players).forEach(p => players[p].push(msgObj));
         }
