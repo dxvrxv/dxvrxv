@@ -57,7 +57,7 @@ module.exports = async (req, res) => {
     }
 
     // Start a new 20-second timeout for the player
-    timeouts[userName] = setTimeout(() => removePlayer(userName), 20000);
+    if (!timeouts[userName]) timeouts[userName] = setTimeout(() => removePlayer(userName), 20000);
 
     res.end(JSON.stringify(players[userName]));
     players[userName] = [];
