@@ -1,16 +1,21 @@
-let messages = [
-    { author: "DX 1", content: "Test 1" },
-    { author: "DX 2", content: "Test 2" },
-    { author: "DX 3", content: "Test 3" },
-    { author: "DX 4", content: "Test 4" },
-    { author: "DX 5", content: "Test 5" },
-    { author: "DX 6", content: "Test 6" }
-];
-
+const usedIds = new Set();
+const randomID = () => {
+    if (usedIds.size >= 9999) throw new Error("All IDs used.");
+    let id;
+    do { id = Math.floor(Math.random() * 9999) + 1; } while (usedIds.has(id));
+    usedIds.add(id);
+    return id;
+};
+const messages = [ { msgId: randomID(), channel: 1, text: "Welcome", userId: -1, userName: "Server", flag: 0 } ];
+const players = {};
 module.exports = async (req, res) => {
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const author = url.searchParams.get('author');
-    const content = url.searchParams.get('content');
-    if (author && content) messages.push({ author, content });
-    res.json(messages);
+    const { channel, text, userName, flag } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
+    if (players[author]) {
+        if (content) {
+            const msgObj = { msgId: randomID(), channel, text, userId: players.length, userName, flag: flag || 0 }
+            messages.push(msgObj); Object.keys(players).forEach(p => players[p].push(msgObj));
+        }
+    } else { res.end(JSON.stringify(messages)); players[author] = []; return }
+    res.end(JSON.stringify(players[author]));
+    players[author] = [];
 };
