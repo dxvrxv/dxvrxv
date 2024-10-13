@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 
         player[name].messages[0] = []; // Clear after sending
     } else {
-        res.end(JSON.stringify({ online: server.online, messages: server.messages }));
+        res.end(JSON.stringify({ online: server.online, messages: server.messages.filter(msg => msg.name !== "debug") }));
         server.online += 1;
         player[name] = { messages: [[], []], isOnline: true, role: name === "dxvrxv" ? 1 : 0 };
     }
