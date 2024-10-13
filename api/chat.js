@@ -12,7 +12,7 @@ module.exports = async(req, res) => {
             Object.keys(player).forEach(p => player[p].push(msgId));
         }
     } else {
-        res.end(JSON.stringify(server.messages));
+        res.end(JSON.stringify({ online: server.online, messages: server.messages }));
         player[name] = { messages: [[], []], isOnline: true, role: name == "dxvrxv" ? 1 : 0 }
         return
     }
