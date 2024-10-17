@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
         }
         clearTimeout(player[pid].timeout);
         player[pid].timeout = setTimeout(() => { player[pid].isOnline = false; server.online -= 1; }, 30000);
-        res.end(JSON.stringify({ online: server.online, messages: server.messages.filter(m => player[pid].messages.includes(m.id)) }));
+        res.end(JSON.stringify({ online: server.online, messages: server.messages.filter(m => player[pid].messages.includes(m.msgId)) }));
         player[pid].messages = [];
     } else {
         server.online += 1;
