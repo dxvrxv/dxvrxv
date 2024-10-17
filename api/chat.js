@@ -1,4 +1,4 @@
-const server = { online: 0, messages: [{ id: 0, text: "Welcome", channel: "common", uid: -1, name: "Server", role: 0 }] };
+const server = { online: 0, messages: [{ id: 0, text: "Welcome", channel: 1, uid: -1, name: "Server", role: 0 }] };
 const player = {};
 
 module.exports = async (req, res) => {
