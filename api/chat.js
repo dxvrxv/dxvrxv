@@ -1,4 +1,6 @@
-const server = { online: 0, messages: [] };
+const server = { online: 0, messages: [
+    { msgId: 0, content: "Hello", pid: -1, pname: "Server", channel: "common" }
+] };
 const player = {};
 module.exports = async (req, res) => {
     const { channel, content, pname, pid } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
