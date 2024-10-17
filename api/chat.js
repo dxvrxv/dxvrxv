@@ -8,11 +8,11 @@ module.exports = async (req, res) => {
         if (content) {
             const msgId = server.messages.length;
             server.messages.push({ msgId, content, channel, pname, pid, role: 0 });
-            Object.keys(player).forEach(p => player[p].messages[0].push(msgId));
+            Object.keys(player).forEach(p => player[p].messages.push(msgId));
         }
         clearTimeout(player[pid].timeout);
         player[pid].timeout = setTimeout(() => { player[pid].isOnline = false; server.online -= 1; }, 30000);
-        res.end(JSON.stringify({ online: server.online, messages: server.messages.filter(m => player[pid].messages[0].includes(m.id)) }));
+        res.end(JSON.stringify({ online: server.online, messages: server.messages.filter(m => player[pid].messages.includes(m.id)) }));
         player[pid].messages = [];
     } else {
         server.online += 1;
