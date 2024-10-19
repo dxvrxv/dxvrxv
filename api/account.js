@@ -1,6 +1,6 @@
 const server = {};
 const player = {
-    [1337]: { userid: 1337, username: "dxvrxv", online: false, position: {}, armor: {}, health: {} },
+    [1337]: { userid: 1337, username: "dxvrxv", online: false, position: {}, armor: { id: null }, health: {} },
     [1000]: { userid: 1000, username: "Bot", online: false, position: { y: 1.6063527708178, x: 4.411156398605 }, armor: { id: "ozk" }, health: {} }
 };
 
