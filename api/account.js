@@ -4,7 +4,7 @@ const player = {
 };
 
 module.exports = (req, res) => {
-    const { userid, x, y, armor } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
+    const { userid, position, armor } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (player[userid]) {
         if (x && y && armor) Object.assign(player[userid], { x, y, armor });
         res.json(player[userid]);
