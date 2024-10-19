@@ -1,6 +1,6 @@
 const server = {};
 const player = {
-    [1337]: { userid: 1337, username: "dxvrxv", online: false, x: 0, y: 0, armor: {}, health: {} }
+    [1337]: { userid: 1337, username: "dxvrxv", online: false, position: {}, armor: {}, health: {} }
 };
 
 module.exports = (req, res) => {
