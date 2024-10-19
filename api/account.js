@@ -6,5 +6,5 @@ const player = {
 module.exports = (req, res) => {
     const { userid } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (player[userid]) res.json(player[userid])
-    else res.json({ message: "User ID not found" })
+    else res.json({ error: "User ID not found" })
 }
