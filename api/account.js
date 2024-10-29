@@ -1,7 +1,7 @@
 const server = {};
 const player = {
     [1337]: { userid: 1337, username: "dxvrxv", userdata: {} },
-    [1000]: { userid: 1000, username: "dx_bot", userdata: { iconId: "ozk", position: { y: 1.6074578934414, x: 4.4045622496041 }, helpdata: {
+    [1000]: { userid: 1000, username: "dx_bot", userdata: { iconId: "ozk", position: { y: 1.6074578934414, x: 4.4045622496041 } }, helpdata: {
     china_season: 10,
     emba_event: 10,
     wearWeaponList: [ 'ks23', 'muha', 'shmel' ],
@@ -18,7 +18,7 @@ const player = {
     armorIconId: 'hw_werewolf_form',
     icon: 'naked',
     new_year: 1
-  } } }
+  } }
 };
 
 module.exports = (req, res) => {
