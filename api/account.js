@@ -27,6 +27,6 @@ module.exports = (req, res) => {
     const { userid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (player[userid]) {
         if (userdata) Object.assign(player[userid], { userdata });
-        else res.json(player[userid]);
+        res.json(player);
     } else res.json({ notFound: true });
 }
