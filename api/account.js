@@ -1,17 +1,32 @@
 const server = {};
 const player = {
-    [1337]: { userid: 1337, username: "dxvrxv", online: false, position: { x: 0, y: 0 }, armorid: "", health: {} },
-    [1000]: { userid: 1000, username: "Bot", online: false, position: { y: 1.6063527708178, x: 4.411156398605 }, armorid: "ozk", hp: 100, armor: 100, armordep: 0, armorLoss: 1, weaponlist: [{id: "ak47_gold"}] }
-};
-
-module.exports = (req, res) => {
-    const { userid, position, armorid, info, data } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
-    if (player[userid]) {
-        if (data) Object.assign(player[userid], { data });
-        if (position) {
-            Object.assign(player[userid], { position, armorid, info });
-            res.json(player);
-        } else res.json(player[userid]);
+    [1337]: {
+        userid: 1337,
+        username: "dxvrxv",
+        userdata: {
+            // iconId: "",
+            // health: 0,
+            // weapon: {},
+            // effect: {},
+            // armorId: "",
+            // armorDep: 0,
+            // armorVal: 0,
+            // apStart: 0,
+            // apRegen: 0,
+            // apMax: 0,
+            // apMove: 0,
+            // speed: 0,
+            // position: {
+            //     x: 0,
+            //     y: 0
+            // }
+        }
     }
-    else res.json({ message: "User ID not found" });
+};
+module.exports = (req, res) => {
+    const { userid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
+    if (player[userid]) {
+        if (userdata) Object.assign(player[userid], { userdata });
+        else res.json(player[userid]);
+    } else res.json({ notFound: true });
 }
