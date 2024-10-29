@@ -5,10 +5,10 @@ const player = {
 };
 
 module.exports = (req, res) => {
-    const { userid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
+    const { userid, allyid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (player[userid]) {
         if (userdata) { Object.assign(player[userid], { userdata }); res.json(player); }
-        else if (inviteid) res.json(player[inviteid]);
+        else if (allyid) res.json(player[allyid]);
         else res.json(player[userid]);
     } else res.json({ notFound: true });
 }
