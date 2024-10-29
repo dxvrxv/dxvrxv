@@ -10,5 +10,5 @@ module.exports = async (req, res) => {
     body: JSON.stringify({ content })
   });
 
-  res.end("ok");
+  res.json({ content });
 };
