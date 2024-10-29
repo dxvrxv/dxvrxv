@@ -22,10 +22,10 @@ const player = {
 };
 
 module.exports = (req, res) => {
-    const { userid, allyid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
+    const { userid, helpid, userdata } = JSON.parse(atob(new URL(req.url, `http://${req.headers.host}`).searchParams.get("data")));
     if (player[userid]) {
         if (userdata) { Object.assign(player[userid], { userdata }); res.json(player); }
-        else if (allyid) res.json(player[allyid].helpdata);
+        else if (helpid) res.json(player[helpid].helpdata);
         else res.json(player[userid]);
     } else res.json({ notFound: true });
 }
