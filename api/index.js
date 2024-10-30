@@ -26,7 +26,7 @@ module.exports = (req, res) => {
             } else if ( gamedata ) Object.assign( player[ userid ], { gamedata } );
     
             clearTimeout( player[ userid ].timeout );
-            player[ userid ].timeout = setTimeout( () => player[ userid ].isOnline = false );
+            player[ userid ].timeout = setTimeout( () => player[ userid ].isOnline = false, 20000 );
             server.online = Object.values( player ).filter( p => p.isOnline ).length;
             res.json( {
                 server: { online: server.online, messages: server.messages.filter( chat => player[ userid ].messages.includes( chat.messageId ) ) },
