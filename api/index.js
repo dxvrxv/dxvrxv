@@ -27,7 +27,7 @@ module.exports = (req, res) => {
     
             clearTimeout( player[ userid ].timeout );
             player[ userid ].timeout = setTimeout( () => player[ userid ].isOnline = false );
-    
+            server.online = Object.values( player ).filter( p => p.isOnline ).length;
             res.json( {
                 server: { online: server.online, messages: server.messages.filter( chat => player[ userid ].messages.includes( chat.messageId ) ) },
                 player: Object.values( player ).map( p => ( { userid: p.userid, username: p.username, gamedata: { armorIconId: p.gamedata?.armorIconId || "", position: p.gamedata.position } } ) ),
@@ -39,10 +39,11 @@ module.exports = (req, res) => {
         } else {
 
             player[ userid ].isOnline = true;
+            server.online = Object.values( player ).filter( p => p.isOnline ).length;
             res.json( { server, player: Object.values( player ).map( p => ( { userid: p.userid, username: p.username, gamedata: { armorIconId: p.gamedata?.armorIconId || "", position: p.gamedata.position } } ) ) } )
 
         }
-        server.online = Object.values( player ).filter( p => p.isOnline ).length;
+        
     } else res.json( { notFound: true } );
 
 }
