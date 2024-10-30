@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
 
             player[ userid ].isOnline = true;
             server.online = Object.values( player ).filter( p => p.isOnline ).length;
-            res.json( { server, player: Object.values( player ).map( p => ( { userid: p.userid, username: p.username, gamedata: { armorIconId: p.gamedata?.armorIconId || "", position: p.gamedata.position } } ) ) } )
+            res.json( { server, player: Object.values( player ).filter(p => p.isOnline).map( p => ( { userid: p.userid, username: p.username, gamedata: { armorIconId: p.gamedata?.armorIconId || "", position: p.gamedata.position } } ) ) } )
 
         }
         
