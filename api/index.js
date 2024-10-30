@@ -12,31 +12,32 @@ const player = {
         gamedata: {
             position: [0, 0],
             name: "",
-            id: 0,
         },
-        messages: [0, 1, 2, 3, 4]
+        messages: []
     }
 };
 
 module.exports = (req, res) => {
+    
     const { userid, helpid, gamedata, content, channel } = JSON.parse( atob( new URL( req.url, `http://${ req.headers.host }` ).searchParams.get( "data" ) ) );
+    
     if ( userid ) {
+        
         if ( content && channel ) {
             const messageId = server.messages.length;
             server.messages.push( { userid, messageId, channel, content } );
             Object.keys( player ).forEach( uid => player[ uid ].messages.push( messageId ) );
-        } else if ( gamedata ) {
-            Object.assign( player[ userid ], { gamedata } );
-        };
+        } else if ( gamedata ) Object.assign( player[ userid ], { gamedata } );
+
         res.json( {
-            server: { online: server.online, messages: server.messages.filter( msg => player[ userid ].messages.includes( msg.messageId ) ) },
+            server: { online: server.online, messages: server.messages.filter( chat => player[ userid ].messages.includes( chat.messageId ) ) },
             player: Object.values( player ).map( p => ( { userid: p.userid, username: p.username, gamedata: p.gamedata } ) ),
             ...( helpid && { helper: { gamedata: player[ helpid ].gamedata } } )
         } );
-        player[ userid ].messages = [];
-    } else {
 
-    }
+        player[ userid ].messages = [];
+
+    } else res.json( { notFound: true } );
 }
 
 /*
