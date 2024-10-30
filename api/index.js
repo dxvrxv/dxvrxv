@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
         if ( player[ userid ].isOnline ) {
             if ( content && channel ) {
                 const messageId = server.messages.length;
-                server.messages.push( { userid, messageId, channel, content, access } );
+                server.messages.push( { userid, messageId, channel, content, access: player[ userid ]?.access || 0 } );
                 Object.keys( player ).forEach( uid => player[ uid ].messages.push( messageId ) );
             } else if ( gamedata ) Object.assign( player[ userid ], { gamedata } );
     
