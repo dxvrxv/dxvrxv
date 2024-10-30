@@ -25,12 +25,12 @@ module.exports = async (req, res) => {
         if ( player[ userid ].isOnline ) {
             if ( content && channel ) {
                 const messageId = server.messages.length;
-                server.messages.push( { userid, messageId, channel, content } );
+                server.messages.push( { userid, messageId, channel, content, access } );
                 Object.keys( player ).forEach( uid => player[ uid ].messages.push( messageId ) );
             } else if ( gamedata ) Object.assign( player[ userid ], { gamedata } );
     
             clearTimeout( player[ userid ].timeout );
-            player[ userid ].timeout = setTimeout( () => player[ userid ].isOnline = false, 20000 );
+            player[ userid ].timeout = setTimeout( () => player[ userid ].isOnline = false, 60000 );
             server.online = Object.values( player ).filter( p => p.isOnline ).length;
             res.json( {
                 server: { online: server.online, messages: server.messages.filter( chat => player[ userid ].messages.includes( chat.messageId ) ) },
