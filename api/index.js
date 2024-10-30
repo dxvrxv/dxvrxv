@@ -40,9 +40,9 @@ module.exports = (req, res) => {
 
             player[ userid ].isOnline = true;
             res.json( { server, player: Object.values( player ).map( p => ( { userid: p.userid, username: p.username, gamedata: { armorIconId: p.gamedata?.armorIconId || "", position: p.gamedata.position } } ) ) } )
-            
-        }
 
+        }
+        server.online = Object.values( player ).filter( p => p.isOnline ).length;
     } else res.json( { notFound: true } );
 
 }
