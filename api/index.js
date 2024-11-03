@@ -20,7 +20,7 @@ async function db(action, table, filter = "", data = {}) {
 module.exports = async (req, res) => {
     const { userid, helpid, username, password, gamedata, content, channel } = JSON.parse( atob( new URL( req.url, `http://${ req.headers.host }` ).searchParams.get( "data" ) ) );
 
-    if ( username && ( password || userid ) ) res.json( Object.values( player ).filter(p => p.username == username && (p.password == password || p.userid == userid)) )
+    if ( username && ( password || userid ) ) res.json( Object.values( player ).filter(p => p.username == username && (p.password == password || p.userid == userid))[0] )
     else if ( userid ) {
 
         if ( player[ userid ].isOnline ) {
