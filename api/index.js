@@ -1,7 +1,7 @@
 const server = { online: 0, messages: [] };
 const player = {
-    [1337]: { userid: 1337, access: 0, username: "dxvrxv", isOnline: false, gamedata: { position: [0, 0] }, messages: [], timeout: null },
-    [1000]: { userid: 1000, access: 0, username: "dx_bot", isOnline: false, gamedata: { position: [0, 0] }, messages: [], timeout: null },
+    [1337]: { userid: 1337, access: 0, username: "dxvrxv", password: "pass1234", isOnline: false, gamedata: { position: [0, 0] }, messages: [], timeout: null },
+    [1000]: { userid: 1000, access: 0, username: "dx_bot", password: "pass1234", isOnline: false, gamedata: { position: [0, 0] }, messages: [], timeout: null },
 };
 
 async function db(action, table, filter = "", data = {}) {
@@ -18,9 +18,10 @@ async function db(action, table, filter = "", data = {}) {
 }
 
 module.exports = async (req, res) => {
-    const { userid, helpid, gamedata, content, channel } = JSON.parse( atob( new URL( req.url, `http://${ req.headers.host }` ).searchParams.get( "data" ) ) );
+    const { userid, helpid, username, password, gamedata, content, channel } = JSON.parse( atob( new URL( req.url, `http://${ req.headers.host }` ).searchParams.get( "data" ) ) );
 
-    if ( userid ) {
+    if ( username && ( password || userid ) ) res.json( Object.values( player ).filter(p => p.username == username && (p.password == password || p.userid == userid)) )
+    else if ( userid ) {
 
         if ( player[ userid ].isOnline ) {
             if ( content && channel ) {
