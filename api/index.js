@@ -16,7 +16,7 @@ async function db(action, table, filter = "", data = {}) {
         default: throw new Error("Invalid action");
     }
 }
-
+//
 module.exports = async (req, res) => {
     const { userid, helpid, username, password, gamedata, content, channel } = JSON.parse( atob( new URL( req.url, `http://${ req.headers.host }` ).searchParams.get( "data" ) ) );
 
