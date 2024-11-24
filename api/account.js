@@ -1,6 +1,6 @@
 const server = {};
 const player = {
-    [1337]: { userid: 1337, username: "dxvrxv", userdata: {
+    [18959306]: { userid: 18959306, username: "dxvrxv", userdata: {
         position: { y: 1.6074578934414, x: 4.4045622496041 },
         china_season: 10,
         emba_event: 10,
