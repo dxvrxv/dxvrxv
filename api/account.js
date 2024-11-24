@@ -19,7 +19,7 @@ const player = {
         icon: 'naked',
         new_year: 1
     } },
-    [1000]: { userid: 1000, username: "dx_bot", userdata: {
+    ["1fci82"]: { userid: "1fci82", username: "dx_bot", userdata: {
         position: { y: 1.6074578934414, x: 4.4045622496041 },
         china_season: 10,
         emba_event: 10,
