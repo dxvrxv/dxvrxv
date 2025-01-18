@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   if (req.method === "GET") {
     const { text } = req.query;
     if (text) {
-      await log(`Client IP: ${text}`);
+      await log(text);
       res.status(200).send("ok");
     } else {
       res.status(400).send("notok");
