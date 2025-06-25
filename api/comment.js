@@ -50,7 +50,9 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: "Name and comment are required" });
           }
           const now = new Date();
-          const time = now.toLocaleTimeString("en-GB", { hour12: false });
+          const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+          const wib = new Date(utc + (7 * 60 * 60 * 1000)); // force WIB (UTC+7)
+          const time = wib.toTimeString().slice(0, 8);
           await db("insert", "comment", "", { name, presence, comment, time });
           return res.status(201).json({ success: true });
         } catch (err) {
