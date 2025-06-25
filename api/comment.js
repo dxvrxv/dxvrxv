@@ -50,7 +50,7 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: "Name and comment are required" });
           }
           const now = new Date();
-          const time = now.toTimeString().slice(0, 8);
+          const time = now.toLocaleTimeString("en-GB", { hour12: false });
           await db("insert", "comment", "", { name, presence, comment, time });
           return res.status(201).json({ success: true });
         } catch (err) {
