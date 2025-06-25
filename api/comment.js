@@ -49,8 +49,9 @@ module.exports = async (req, res) => {
           if (!name || !comment) {
             return res.status(400).json({ error: "Name and comment are required" });
           }
-
-          await db("insert", "comment", "", { name, presence, comment });
+          const now = new Date();
+          const time = now.toTimeString().slice(0, 8);
+          await db("insert", "comment", "", { name, presence, comment, time });
           return res.status(201).json({ success: true });
         } catch (err) {
           return res.status(500).json({ error: err.message });
