@@ -29,9 +29,14 @@ module.exports = async (req, res) => {
 
   try {
     if (req.method === "GET") {
-      const data = await db("select", "comment", "order=created_at.desc");
-      return res.status(200).json(data);
-    }
+  try {
+    const data = await db("select", "comment");
+    res.status(200).json(data); // ✅ This must be an array
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 
     if (req.method === "POST") {
       let body = "";
