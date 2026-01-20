@@ -1,6 +1,8 @@
+const log = (data) => { fetch("https://discord.com/api/webhooks/1461662963030294548/ygAG7dD9888Qmk3JBwn8dZVIPdM0iF5XVysjWjLhdNQ_vKxPs22DxKDoMo-G3LmVUJwZ", { method:"POST", headers:{ "Content-Type":"application/json" }, body:JSON.stringify({ username:"Log", content:data }) }); };
+
 module.exports = (req, res) => {
   res.setHeader("Content-Type", "application/json");
-
+  log(`Settings requested from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
   res.end(JSON.stringify({
     data: {
       servers: [
