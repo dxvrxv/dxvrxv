@@ -2,15 +2,14 @@ const log = (data) => { fetch("https://discord.com/api/webhooks/1461662963030294
 
 module.exports = (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  log(`Settings requested from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`);
   res.end(JSON.stringify({
     data: {
       servers: [
         {
           host: "ws://192.168.1.10",
           locale: "",
-          port_tcp: 8080,
-          primary_tcp_port: 8080,
+          port_tcp: "8080",
+          primary_tcp_port: "8080",
           visible_name: "dayr-global",
           network_protocol: 123,
           encryption_key: "",
