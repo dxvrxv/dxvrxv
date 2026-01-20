@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     data: {
       servers: [
         {
-          host: "wss://adcc21038549.ngrok-free.app",
+          host: "ws://adcc21038549.ngrok-free.app",
           locale: "",
           port_tcp: 443,
           primary_tcp_port: 443,
