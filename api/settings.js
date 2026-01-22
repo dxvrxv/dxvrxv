@@ -12,7 +12,7 @@ module.exports = (req, res) => {
           primary_tcp_port: "8080",
           visible_name: "dayr-global",
           network_protocol: 123,
-          encryption_key: "",
+          encryption_key: "5994471abb01112afcc18159f6cc74b4",
           minimum_version_ios: 711,
           minimum_version_android: 711,
           online: 1,
