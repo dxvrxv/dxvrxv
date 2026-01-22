@@ -6,10 +6,10 @@ module.exports = (req, res) => {
     data: {
       servers: [
         {
-          host: "ws://192.168.1.16",
+          host: "ws://142.132.251.231",
           locale: "",
-          port_tcp: "8080",
-          primary_tcp_port: "8080",
+          port_tcp: "2020",
+          primary_tcp_port: "2020",
           visible_name: "dayr-global",
           network_protocol: 123,
           encryption_key: "5994471abb01112afcc18159f6cc74b4",
