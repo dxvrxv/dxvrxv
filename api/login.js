@@ -20,4 +20,8 @@ module.exports = async (req, res) => {
     await log(e);
     res.status(400).json({ success: false });
   }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 36fb070 (1)
