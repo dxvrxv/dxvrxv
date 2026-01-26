@@ -27,12 +27,4 @@ module.exports = async (req, res) => {
     await log(String(e));
     res.status(400).json({ success: false });
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> 36fb070 (1)
-=======
-};
->>>>>>> 7f471f0 (1)
