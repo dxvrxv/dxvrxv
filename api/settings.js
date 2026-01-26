@@ -23,8 +23,8 @@ module.exports = (req, res) => {
         {
           host: "ws://0.tcp.ap.ngrok.io",
           locale: "",
-          port_tcp: "11311",
-          primary_tcp_port: "11311",
+          port_tcp: "16870",
+          primary_tcp_port: "16870",
           visible_name: "dayr-global",
           network_protocol: 123,
           encryption_key: "5994471abb01112afcc18159f6cc74b4",
