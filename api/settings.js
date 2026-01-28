@@ -5,26 +5,11 @@ module.exports = (req, res) => {
   res.end(JSON.stringify({
     data: {
       servers: [
-        // {
-        //   host: "ws://142.132.251.231",
-        //   locale: "",
-        //   port_tcp: "2020",
-        //   primary_tcp_port: "2020",
-        //   visible_name: "dayr-global",
-        //   network_protocol: 123,
-        //   encryption_key: "5994471abb01112afcc18159f6cc74b4",
-        //   minimum_version_ios: 711,
-        //   minimum_version_android: 711,
-        //   online: 1,
-        //   time_updated: Math.floor(Date.now() / 1000),
-        //   delta_updated: 0,
-        //   is_serialize_int: false
-        // },
         {
-          host: "ws://0.tcp.ap.ngrok.io",
+          host: "ws://142.132.251.231",
           locale: "",
-          port_tcp: "18083",
-          primary_tcp_port: "18083",
+          port_tcp: "2020",
+          primary_tcp_port: "2020",
           visible_name: "dayr-global",
           network_protocol: 123,
           encryption_key: "5994471abb01112afcc18159f6cc74b4",
@@ -35,6 +20,21 @@ module.exports = (req, res) => {
           delta_updated: 0,
           is_serialize_int: false
         },
+        // {
+        //   host: "ws://0.tcp.ap.ngrok.io",
+        //   locale: "",
+        //   port_tcp: "18083",
+        //   primary_tcp_port: "18083",
+        //   visible_name: "dayr-global",
+        //   network_protocol: 123,
+        //   encryption_key: "5994471abb01112afcc18159f6cc74b4",
+        //   minimum_version_ios: 711,
+        //   minimum_version_android: 711,
+        //   online: 1,
+        //   time_updated: Math.floor(Date.now() / 1000),
+        //   delta_updated: 0,
+        //   is_serialize_int: false
+        // },
       ]
     },
     result: 1
