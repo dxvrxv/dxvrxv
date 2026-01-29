@@ -1,10 +1,11 @@
 const Crypto = require("crypto");
-const Hash = Crypto.createHash("md5").update("dxvrxv-passw").digest("hex");
+const Hash = (data) => Crypto.createHash("md5").update(data).digest("hex");
 const enc = (data, key) => [Crypto.createCipheriv("aes-256-cbc", Buffer.from(key), Buffer.alloc(16))].map(k => Buffer.concat([k.update(data, "utf8"), k.final()]).toString("base64")).join("");
 const dec = (data, key) => [Crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), Buffer.alloc(16))].map(k => Buffer.concat([k.update(Buffer.from(data, "base64")), k.final()]).toString("utf8")).join("");
 const log = async (data) => await fetch("https://discord.com/api/webhooks/1461662963030294548/ygAG7dD9888Qmk3JBwn8dZVIPdM0iF5XVysjWjLhdNQ_vKxPs22DxKDoMo-G3LmVUJwZ", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ username: "Log", content: data }) });
 const userdata = {
-    [Hash]: { userid: 1337, username: "dxvrxv" }
+    [Hash("dxvrxv-passw")]: { userid: 1337, username: "dxvrxv" },
+    [Hash("dx_alt-passd")]: { userid: 1000, username: "dx_alt" }
 }
 module.exports = async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
