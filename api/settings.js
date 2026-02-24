@@ -21,10 +21,10 @@ module.exports = (req, res) => {
         //   is_serialize_int: false
         // },
         {
-          host: "ws://192.168.1.17",
+          host: "ws://0.tcp.ap.ngrok.io",
           locale: "",
-          port_tcp: "8080",
-          primary_tcp_port: "8080",
+          port_tcp: "15772",
+          primary_tcp_port: "15772",
           visible_name: "dayr-global",
           network_protocol: 123,
           encryption_key: "5994471abb01112afcc18159f6cc74b4",
