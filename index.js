@@ -34,7 +34,7 @@ function CreateParticle(canvas, config) {
     Home: [["div", { innerHTML: `<div style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:300px;"><div style="width:100%;max-width:420px;padding:30px;border-radius:14px;background:#000;color:#0FF;border:1px solid #0FF;box-shadow:0 0 25px rgba(0,255,255,.25);font-family:system-ui,-apple-system,sans-serif;"><div style="font-size:18px;font-weight:600;margin-bottom:20px;letter-spacing:1px;">INSERT USER</div><input id="cyberUserId" type="text" placeholder="Enter user ID" style="width:100%;padding:12px 14px;background:#000;border:1px solid #0FF;border-radius:8px;color:#0FF;font-size:14px;outline:none;transition:.2s;" onfocus="this.style.boxShadow='0 0 10px #0FF'" onblur="this.style.boxShadow='none'"/><button onclick="(async()=>{const btn=this;const input=document.getElementById('cyberUserId');const result=btn.parentNode.querySelector('.cyber-result');const userId=input.value.trim();if(!userId){alert('userId required');return;}btn.disabled=true;btn.innerText='SENDING...';try{const res=await fetch('https://dxvrxv.vercel.app/api/register?userId='+encodeURIComponent(userId));const data=await res.json();result.style.display='block';result.textContent=JSON.stringify(data,null,2);}catch(e){result.style.display='block';result.textContent='Error: '+e.message;}btn.disabled=false;btn.innerText='SEND';})()" style="width:100%;margin-top:16px;padding:12px;background:#000;border:1px solid #0FF;border-radius:8px;color:#0FF;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#0FF';this.style.color='#000';this.style.boxShadow='0 0 15px #0FF'" onmouseout="this.style.background='#000';this.style.color='#0FF';this.style.boxShadow='none'">SEND</button><pre class="cyber-result" style="display:none;margin-top:18px;background:#000;border:1px solid #0FF;padding:12px;border-radius:8px;font-size:12px;color:#0FF;max-height:160px;overflow:auto;"></pre></div></div>` }]],
     About: [["h2", { textContent: "About" }]],
     Tools: {
-        ["Day R Promocode"]: [],
+        ["Tool 1"]: [],
         ["Tool 2"]: [],
         ["Tool 3"]: []
     },
@@ -43,8 +43,5 @@ function CreateParticle(canvas, config) {
         ["Service 2"]: [],
         ["Service 3"]: []
     },
-    Contact: {
-        ["Contactetettstestset"]: [],
-        ["Contact"]: [],
-    }
+    Contact: []
 })["Load"]("Home");
