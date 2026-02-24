@@ -14,10 +14,26 @@ async function db(action, table, filter = "", data = {}) {
 module.exports = async (req, res) => {
     try {
         const { userId } = req.query;
-        if (!userId) { return res.status(400).json({ error: "userId is required" }); }
+        if (!userId) {
+            return res.status(400).json({ error: "userId is required" });
+        }
+        const existing = await db("select", "users", `id=eq.${userId}&select=id`);
+
+        if (existing && existing.length > 0) {
+            return res.status(200).json({
+                success: false,
+                message: "User already exists",
+                userId
+            });
+        }
         await db("insert", "users", "", { id: userId });
-        res.status(200).json({ success: true, updatedId: userId });
+
+        return res.status(200).json({
+            success: true,
+            insertedId: userId
+        });
+
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
 };
