@@ -21,7 +21,7 @@ module.exports = (req, res) => {
         //   is_serialize_int: false
         // },
         {
-          host: "ws://192.168.1.16",
+          host: "ws://192.168.1.17",
           locale: "",
           port_tcp: "8080",
           primary_tcp_port: "8080",
