@@ -16,21 +16,33 @@ module.exports = async (req, res) => {
         const { userId, name, login } = req.query;
 
         if (!userId || !name || !login) {
-            return res.status(400).json({ error: "userId, name and login are required" });
-        }
-
-        // Check if user exists
-        const existing = await db("select", "users", `id=eq.${userId}&select=id`);
-
-        if (existing && existing.length > 0) {
-            return res.status(200).json({
-                success: false,
-                message: "User already exists",
-                userId
+            return res.status(400).json({
+                error: "userId, name and login are required"
             });
         }
 
-        // Insert new user
+        // Check if any of them already exist
+        const existing = await db(
+            "select",
+            "users",
+            `or=(id.eq.${encodeURIComponent(userId)},name.eq.${encodeURIComponent(name)},login.eq.${encodeURIComponent(login)})&select=id,name,login`
+        );
+
+        if (existing && existing.length > 0) {
+            const conflict = existing[0];
+
+            let message = "Already exists";
+            if (conflict.id == userId) message = "userId already exists";
+            else if (conflict.name == name) message = "name already exists";
+            else if (conflict.login == login) message = "login already exists";
+
+            return res.status(200).json({
+                success: false,
+                message
+            });
+        }
+
+        // Insert if fully unique
         await db("insert", "users", "", {
             id: userId,
             name,
