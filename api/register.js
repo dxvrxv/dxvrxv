@@ -13,10 +13,13 @@ async function db(action, table, filter = "", data = {}) {
 
 module.exports = async (req, res) => {
     try {
-        const { userId } = req.query;
-        if (!userId) {
-            return res.status(400).json({ error: "userId is required" });
+        const { userId, name, login } = req.query;
+
+        if (!userId || !name || !login) {
+            return res.status(400).json({ error: "userId, name and login are required" });
         }
+
+        // Check if user exists
         const existing = await db("select", "users", `id=eq.${userId}&select=id`);
 
         if (existing && existing.length > 0) {
@@ -26,11 +29,19 @@ module.exports = async (req, res) => {
                 userId
             });
         }
-        await db("insert", "users", "", { id: userId });
+
+        // Insert new user
+        await db("insert", "users", "", {
+            id: userId,
+            name,
+            login
+        });
 
         return res.status(200).json({
             success: true,
-            insertedId: userId
+            insertedId: userId,
+            name,
+            login
         });
 
     } catch (err) {
